@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Lesson1</string>
+    <string name="default_counter_value">0</string>
+    <string name="increment_button_description">+</string>
+    <string name="decrement_button_description">-</string>
+    <string name="next_activity_button">next activity</string>
+</resources>

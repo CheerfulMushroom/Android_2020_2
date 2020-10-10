@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/default_counter_value"
+        android:textSize="30sp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/increment_counter"
+        android:layout_width="wrap_content"
+        android:text="@string/increment_button_description"
+        android:textSize="40sp"
+        android:layout_height="120dp" />
+
+    <Button
+        android:id="@+id/decrement_counter"
+        android:layout_width="wrap_content"
+        android:text="@string/decrement_button_description"
+        android:textSize="50sp"
+        android:layout_height="120dp" />
+
+    <Button
+        android:id="@+id/next_activity_button"
+        android:text="@string/next_activity_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
