@@ -2,6 +2,7 @@ package com.example.homework_1;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,7 @@ public class RecyclerViewFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull NumberViewHolder holder, int position) {
 
-            Integer numberToSet = mNumbers.get(position);
+            final Integer numberToSet = mNumbers.get(position);
             holder.mNumberView.setText(String.valueOf(numberToSet));
 
             if (numberToSet % 2 == 0) {
@@ -60,6 +61,14 @@ public class RecyclerViewFragment extends Fragment {
             } else {
                 holder.mNumberView.setTextColor(mContext.getColor(R.color.numberBlue));
             }
+
+            holder.mNumberView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("test", numberToSet.toString());
+
+                }
+            });
         }
 
         @Override

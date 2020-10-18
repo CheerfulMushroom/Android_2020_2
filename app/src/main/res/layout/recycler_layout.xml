@@ -10,7 +10,7 @@
         android:id="@+id/recycler_numbers"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-
+        android:padding="10dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="3"
         />
