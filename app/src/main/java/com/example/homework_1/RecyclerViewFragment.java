@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,7 +27,16 @@ public class RecyclerViewFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_numbers);
         // TODO: check context
-        recyclerView.setAdapter(new NumbersAdapter(getContext()));
+        final NumbersAdapter adapter = new NumbersAdapter(getContext());
+        recyclerView.setAdapter(adapter);
+
+        Button addElementButton = view.findViewById(R.id.addElementButton);
+        addElementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.addElement();
+            }
+        });
 
         return view;
     }
@@ -91,7 +101,11 @@ public class RecyclerViewFragment extends Fragment {
             return mNumbers.size();
         }
 
-
+        public void addElement() {
+            final int lastNumber = mNumbers.get(mNumbers.size() - 1);
+            mNumbers.add(lastNumber + 1);
+            notifyItemInserted(mNumbers.size());
+        }
     }
 
     public static class NumberViewHolder extends RecyclerView.ViewHolder {
