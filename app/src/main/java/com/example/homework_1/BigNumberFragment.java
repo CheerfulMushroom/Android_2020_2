@@ -39,9 +39,8 @@ public class BigNumberFragment extends Fragment {
 
         assert getArguments() != null;
 
-        // TODO: use color from colors
-        int color = getArguments().getInt(COLOR, 0);
-        int number = getArguments().getInt(NUMBER, 0);
+        int color = getArguments().getInt(COLOR);
+        int number = getArguments().getInt(NUMBER);
 
         TextView numberView = view.findViewById(R.id.big_number);
         numberView.setTextColor(color);

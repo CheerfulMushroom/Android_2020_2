@@ -7,7 +7,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String recyclerFragmentTag = "RECYCLER_FRAGMENT_TAG";
+    private static final String RECYCLER_FRAGMENT_TAG = "RECYCLER_FRAGMENT_TAG";
+    private static final int INITIAL_ITEMS_AMOUNT = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        if (fragmentManager.findFragmentByTag(recyclerFragmentTag) == null) {
-            transaction.replace(R.id.main_fragment, RecyclerViewFragment.newInstance(100), recyclerFragmentTag);
+        if (fragmentManager.findFragmentByTag(RECYCLER_FRAGMENT_TAG) == null) {
+            transaction.replace(R.id.main_fragment, RecyclerViewFragment.newInstance(INITIAL_ITEMS_AMOUNT), RECYCLER_FRAGMENT_TAG);
         }
 
         transaction.commitAllowingStateLoss();
