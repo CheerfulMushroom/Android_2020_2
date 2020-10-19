@@ -7,11 +7,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class BigNumberFragment extends Fragment {
+    private static final String COLOR = "COLOR";
+    private static final String NUMBER = "NUMBER";
+
+    public static BigNumberFragment newInstance(int number, @ColorInt int color) {
+        BigNumberFragment fragment = new BigNumberFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(COLOR, color);
+        bundle.putInt(NUMBER, number);
+
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -22,32 +37,14 @@ public class BigNumberFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        assert getArguments() != null;
+
+        // TODO: use color from colors
+        int color = getArguments().getInt(COLOR, 0);
+        int number = getArguments().getInt(NUMBER, 0);
+
         TextView numberView = view.findViewById(R.id.big_number);
-
-        int color = 0;
-        int number = 0;
-
-        if (savedInstanceState != null) {
-            // TODO: remove hardcode
-            color = savedInstanceState.getInt("color", 0);
-            number = savedInstanceState.getInt("number", 0);
-
-        } else if (getArguments() != null) {
-            // TODO: use color from colors
-            color = getArguments().getInt("color", 0);
-            number = getArguments().getInt("number", 0);
-        }
-
         numberView.setTextColor(color);
         numberView.setText(String.valueOf(number));
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        TextView bigNumberView = getView().findViewById(R.id.big_number);
-        outState.putInt("color", bigNumberView.getCurrentTextColor());
-        outState.putInt("number", Integer.parseInt(bigNumberView.getText().toString()));
     }
 }

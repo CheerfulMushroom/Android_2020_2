@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,8 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class RecyclerViewFragment extends Fragment {
-    private RecyclerViewFragment(){};
-    private static final String ITEMS_AMOUNT = "INITIAL_ELEMENTS_AMOUNT";
+    private static final String ITEMS_AMOUNT = "ITEMS_AMOUNT";
 
     public static RecyclerViewFragment newInstance(int elementsAmount) {
         RecyclerViewFragment fragment = new RecyclerViewFragment();
@@ -36,7 +36,10 @@ public class RecyclerViewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recycler_layout, container, false);
 
-        int itemsAmount = getArguments().getInt(ITEMS_AMOUNT, 100);
+        final Bundle bundle = getArguments();
+        assert bundle != null;
+
+        int itemsAmount = getArguments().getInt(ITEMS_AMOUNT);
         NumbersDataSource numbersDataSource = new NumbersDataSource(itemsAmount);
 
         // TODO: check context
@@ -50,7 +53,7 @@ public class RecyclerViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 adapter.addElement();
-                getArguments().putInt(ITEMS_AMOUNT, adapter.size());
+                bundle.putInt(ITEMS_AMOUNT, adapter.size());
             }
         });
 
@@ -103,12 +106,10 @@ public class RecyclerViewFragment extends Fragment {
             holder.mNumberView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("color", holder.mNumberView.getCurrentTextColor());
-                    bundle.putInt("number", Integer.parseInt(holder.mNumberView.getText().toString()));
+                    int number = Integer.parseInt(holder.mNumberView.getText().toString());
+                    @ColorInt int color = holder.mNumberView.getCurrentTextColor();
 
-                    Fragment bigNumberFragment = new BigNumberFragment();
-                    bigNumberFragment.setArguments(bundle);
+                    Fragment bigNumberFragment = BigNumberFragment.newInstance(number, color);
 
                     FragmentManager fragmentManager = RecyclerViewFragment.this.getFragmentManager();
                     if (fragmentManager != null) {
