@@ -7,14 +7,23 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String recyclerFragmentTag = "RECYCLER_FRAGMENT_TAG";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_fragment, new RecyclerViewFragment());
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        if (fragmentManager.findFragmentByTag(recyclerFragmentTag) == null) {
+            transaction.replace(R.id.main_fragment, new RecyclerViewFragment(), recyclerFragmentTag);
+        }
+
         transaction.commitAllowingStateLoss();
     }
+
+
 }

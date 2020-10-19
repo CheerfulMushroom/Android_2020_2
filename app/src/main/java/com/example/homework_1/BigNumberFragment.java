@@ -45,5 +45,9 @@ public class BigNumberFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+
+        TextView bigNumberView = getView().findViewById(R.id.big_number);
+        outState.putInt("color", bigNumberView.getCurrentTextColor());
+        outState.putInt("number", Integer.parseInt(bigNumberView.getText().toString()));
     }
 }
