@@ -2,7 +2,6 @@ package com.example.homework_1;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,18 +15,34 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewFragment extends Fragment {
+    private RecyclerViewFragment(){};
+    private static final String ITEMS_AMOUNT = "INITIAL_ELEMENTS_AMOUNT";
+
+    public static RecyclerViewFragment newInstance(int elementsAmount) {
+        RecyclerViewFragment fragment = new RecyclerViewFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(ITEMS_AMOUNT, elementsAmount);
+
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recycler_layout, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_numbers);
+        int itemsAmount = getArguments().getInt(ITEMS_AMOUNT, 100);
+        NumbersDataSource numbersDataSource = new NumbersDataSource(itemsAmount);
+
         // TODO: check context
-        final NumbersAdapter adapter = new NumbersAdapter(getContext());
+        final NumbersAdapter adapter = new NumbersAdapter(getContext(), numbersDataSource);
+
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_numbers);
         recyclerView.setAdapter(adapter);
 
         Button addElementButton = view.findViewById(R.id.addElementButton);
@@ -35,23 +50,34 @@ public class RecyclerViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 adapter.addElement();
+                getArguments().putInt(ITEMS_AMOUNT, adapter.size());
             }
         });
 
         return view;
     }
 
+
     public class NumbersAdapter extends RecyclerView.Adapter<NumberViewHolder> {
         private final Context mContext;
-        private List<Integer> mNumbers;
+        private NumbersDataSource mNumbersDataSource;
 
-        public NumbersAdapter(Context context) {
+        public NumbersAdapter(Context context, NumbersDataSource numbersDataSource) {
             mContext = context;
-            mNumbers = new ArrayList<Integer>();
+            mNumbersDataSource = numbersDataSource;
+        }
 
-            for (int i = 0; i < 100; i++) {
-                mNumbers.add(i);
-            }
+        public int size() {
+            return mNumbersDataSource.size();
+        }
+
+        public void addElement() {
+            List<Integer> numbers = mNumbersDataSource.getNumbers();
+            final int lastNumber = numbers.get(numbers.size() - 1);
+
+            mNumbersDataSource.addNumber(lastNumber + 1);
+
+            notifyItemInserted(mNumbersDataSource.size());
         }
 
         @NonNull
@@ -65,7 +91,7 @@ public class RecyclerViewFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull final NumberViewHolder holder, int position) {
 
-            final Integer numberToSet = mNumbers.get(position);
+            final Integer numberToSet = mNumbersDataSource.getNumbers().get(position);
             holder.mNumberView.setText(String.valueOf(numberToSet));
 
             if (numberToSet % 2 == 0) {
@@ -98,14 +124,10 @@ public class RecyclerViewFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return mNumbers.size();
+            return mNumbersDataSource.getNumbers().size();
         }
 
-        public void addElement() {
-            final int lastNumber = mNumbers.get(mNumbers.size() - 1);
-            mNumbers.add(lastNumber + 1);
-            notifyItemInserted(mNumbers.size());
-        }
+
     }
 
     public static class NumberViewHolder extends RecyclerView.ViewHolder {
