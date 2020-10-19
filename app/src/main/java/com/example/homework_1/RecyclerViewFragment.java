@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -42,8 +43,9 @@ public class RecyclerViewFragment extends Fragment {
         int itemsAmount = getArguments().getInt(ITEMS_AMOUNT);
         NumbersDataSource numbersDataSource = new NumbersDataSource(itemsAmount);
 
-        // TODO: check context
-        final NumbersAdapter adapter = new NumbersAdapter(getContext(), numbersDataSource);
+        final NumbersAdapter adapter = new NumbersAdapter(numbersDataSource,
+                ResourcesCompat.getColor(getResources(), R.color.numberRed, null),
+                ResourcesCompat.getColor(getResources(), R.color.numberBlue, null));
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_numbers);
         recyclerView.setAdapter(adapter);
@@ -62,11 +64,15 @@ public class RecyclerViewFragment extends Fragment {
 
 
     public class NumbersAdapter extends RecyclerView.Adapter<NumberViewHolder> {
-        private final Context mContext;
         private NumbersDataSource mNumbersDataSource;
+        private final @ColorInt int mEvenNumbersColor;
+        private final @ColorInt int mOddNumbersColor;
 
-        public NumbersAdapter(Context context, NumbersDataSource numbersDataSource) {
-            mContext = context;
+        public NumbersAdapter(NumbersDataSource numbersDataSource,
+                              @ColorInt int evenNumbersColor,
+                              @ColorInt int oddNumbersColor) {
+            mEvenNumbersColor = evenNumbersColor;
+            mOddNumbersColor = oddNumbersColor;
             mNumbersDataSource = numbersDataSource;
         }
 
@@ -86,7 +92,6 @@ public class RecyclerViewFragment extends Fragment {
         @NonNull
         @Override
         public NumberViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            // TODO: check context
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.number_layout, parent, false);
             return new NumberViewHolder(view);
         }
@@ -98,9 +103,9 @@ public class RecyclerViewFragment extends Fragment {
             holder.mNumberView.setText(String.valueOf(numberToSet));
 
             if (numberToSet % 2 == 0) {
-                holder.mNumberView.setTextColor(mContext.getColor(R.color.numberRed));
+                holder.mNumberView.setTextColor(mEvenNumbersColor);
             } else {
-                holder.mNumberView.setTextColor(mContext.getColor(R.color.numberBlue));
+                holder.mNumberView.setTextColor(mOddNumbersColor);
             }
 
             holder.mNumberView.setOnClickListener(new View.OnClickListener() {
