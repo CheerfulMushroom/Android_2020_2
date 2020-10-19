@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class RecyclerViewFragment extends Fragment {
         return view;
     }
 
-    public static class NumbersAdapter extends RecyclerView.Adapter<NumberViewHolder> {
+    public class NumbersAdapter extends RecyclerView.Adapter<NumberViewHolder> {
         private final Context mContext;
         private List<Integer> mNumbers;
 
@@ -51,7 +53,7 @@ public class RecyclerViewFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull NumberViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull final NumberViewHolder holder, int position) {
 
             final Integer numberToSet = mNumbers.get(position);
             holder.mNumberView.setText(String.valueOf(numberToSet));
@@ -64,8 +66,21 @@ public class RecyclerViewFragment extends Fragment {
 
             holder.mNumberView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    Log.d("test", numberToSet.toString());
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("color", holder.mNumberView.getCurrentTextColor());
+                    bundle.putInt("number", Integer.parseInt(holder.mNumberView.getText().toString()));
+
+                    Fragment bigNumberFragment = new BigNumberFragment();
+                    bigNumberFragment.setArguments(bundle);
+
+                    FragmentManager fragmentManager = RecyclerViewFragment.this.getFragmentManager();
+                    if (fragmentManager != null) {
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        transaction.replace(R.id.main_fragment, bigNumberFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commitAllowingStateLoss();
+                    }
 
                 }
             });
