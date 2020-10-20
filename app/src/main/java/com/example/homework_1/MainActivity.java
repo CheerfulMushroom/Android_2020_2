@@ -2,7 +2,6 @@ package com.example.homework_1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
@@ -20,9 +19,9 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (fragmentManager.findFragmentByTag(RECYCLER_FRAGMENT_TAG) == null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.main_fragment, RecyclerViewFragment.newInstance(FIRST_NUMBER, LAST_NUMBER), RECYCLER_FRAGMENT_TAG);
-            transaction.commitAllowingStateLoss();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_fragment, RecyclerViewFragment.newInstance(FIRST_NUMBER, LAST_NUMBER), RECYCLER_FRAGMENT_TAG)
+                    .commitAllowingStateLoss();
         }
 
     }

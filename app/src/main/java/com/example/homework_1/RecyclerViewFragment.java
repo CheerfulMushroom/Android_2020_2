@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -72,10 +71,10 @@ public class RecyclerViewFragment extends Fragment {
 
         FragmentManager fragmentManager = getFragmentManager();
         if (fragmentManager != null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.main_fragment, bigNumberFragment);
-            transaction.addToBackStack(null);
-            transaction.commitAllowingStateLoss();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_fragment, bigNumberFragment)
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss();
         }
     }
 

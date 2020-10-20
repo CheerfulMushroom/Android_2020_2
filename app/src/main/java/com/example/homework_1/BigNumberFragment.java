@@ -1,6 +1,5 @@
 package com.example.homework_1;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

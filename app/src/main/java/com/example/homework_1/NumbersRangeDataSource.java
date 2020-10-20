@@ -8,7 +8,7 @@ public class NumbersRangeDataSource {
 
     public NumbersRangeDataSource(int start, int stop) {
 
-        mNumbers = new ArrayList<Integer>();
+        mNumbers = new ArrayList<>();
         for (int i = start; i <= stop; i++) {
             mNumbers.add(i);
         }
