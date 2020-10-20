@@ -16,14 +16,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         if (fragmentManager.findFragmentByTag(RECYCLER_FRAGMENT_TAG) == null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.main_fragment, RecyclerViewFragment.newInstance(FIRST_NUMBER, LAST_NUMBER), RECYCLER_FRAGMENT_TAG);
+            transaction.commitAllowingStateLoss();
         }
 
-        transaction.commitAllowingStateLoss();
     }
 
 
