@@ -3,13 +3,13 @@ package com.example.homework_1;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NumbersDataSource {
+public class NumbersRangeDataSource {
     private List<Integer> mNumbers;
 
-    public NumbersDataSource(int size) {
+    public NumbersRangeDataSource(int start, int stop) {
 
         mNumbers = new ArrayList<Integer>();
-        for (int i = 0; i < size; i++) {
+        for (int i = start; i <= stop; i++) {
             mNumbers.add(i);
         }
     }
@@ -24,5 +24,9 @@ public class NumbersDataSource {
 
     public int size() {
         return mNumbers.size();
+    }
+
+    public int lastNumber() {
+        return mNumbers.get(mNumbers.size() - 1);
     }
 }

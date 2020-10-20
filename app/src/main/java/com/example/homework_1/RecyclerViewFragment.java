@@ -1,6 +1,5 @@
 package com.example.homework_1;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +19,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class RecyclerViewFragment extends Fragment {
-    private static final String ITEMS_AMOUNT = "ITEMS_AMOUNT";
+    private static final String FIRST_NUMBER = "FIRST_NUMBER";
+    private static final String LAST_NUMBER = "LAST_NUMBER";
 
-    public static RecyclerViewFragment newInstance(int elementsAmount) {
+    public static RecyclerViewFragment newInstance(int firstNumber, int lastNumber) {
         RecyclerViewFragment fragment = new RecyclerViewFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putInt(ITEMS_AMOUNT, elementsAmount);
+        bundle.putInt(FIRST_NUMBER, firstNumber);
+        bundle.putInt(LAST_NUMBER, lastNumber);
 
         fragment.setArguments(bundle);
         return fragment;
@@ -40,10 +41,11 @@ public class RecyclerViewFragment extends Fragment {
         final Bundle bundle = getArguments();
         assert bundle != null;
 
-        int itemsAmount = getArguments().getInt(ITEMS_AMOUNT);
-        NumbersDataSource numbersDataSource = new NumbersDataSource(itemsAmount);
+        int firstNumber = bundle.getInt(FIRST_NUMBER);
+        int lastNumber = bundle.getInt(LAST_NUMBER);
+        NumbersRangeDataSource numbersRangeDataSource = new NumbersRangeDataSource(firstNumber, lastNumber);
 
-        final NumbersAdapter adapter = new NumbersAdapter(numbersDataSource,
+        final NumbersAdapter adapter = new NumbersAdapter(numbersRangeDataSource,
                 ResourcesCompat.getColor(getResources(), R.color.numberRed, null),
                 ResourcesCompat.getColor(getResources(), R.color.numberBlue, null));
 
@@ -55,7 +57,7 @@ public class RecyclerViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 adapter.addElement();
-                bundle.putInt(ITEMS_AMOUNT, adapter.size());
+                bundle.putInt(LAST_NUMBER, adapter.lastNumber());
             }
         });
 
@@ -64,29 +66,29 @@ public class RecyclerViewFragment extends Fragment {
 
 
     public class NumbersAdapter extends RecyclerView.Adapter<NumberViewHolder> {
-        private NumbersDataSource mNumbersDataSource;
+        private NumbersRangeDataSource mNumbersRangeDataSource;
         private final @ColorInt int mEvenNumbersColor;
         private final @ColorInt int mOddNumbersColor;
 
-        public NumbersAdapter(NumbersDataSource numbersDataSource,
+        public NumbersAdapter(NumbersRangeDataSource numbersRangeDataSource,
                               @ColorInt int evenNumbersColor,
                               @ColorInt int oddNumbersColor) {
             mEvenNumbersColor = evenNumbersColor;
             mOddNumbersColor = oddNumbersColor;
-            mNumbersDataSource = numbersDataSource;
+            mNumbersRangeDataSource = numbersRangeDataSource;
         }
 
-        public int size() {
-            return mNumbersDataSource.size();
+        public int lastNumber() {
+            return mNumbersRangeDataSource.lastNumber();
         }
 
         public void addElement() {
-            List<Integer> numbers = mNumbersDataSource.getNumbers();
+            List<Integer> numbers = mNumbersRangeDataSource.getNumbers();
             final int lastNumber = numbers.get(numbers.size() - 1);
 
-            mNumbersDataSource.addNumber(lastNumber + 1);
+            mNumbersRangeDataSource.addNumber(lastNumber + 1);
 
-            notifyItemInserted(mNumbersDataSource.size());
+            notifyItemInserted(mNumbersRangeDataSource.size());
         }
 
         @NonNull
@@ -99,7 +101,7 @@ public class RecyclerViewFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull final NumberViewHolder holder, int position) {
 
-            final Integer numberToSet = mNumbersDataSource.getNumbers().get(position);
+            final Integer numberToSet = mNumbersRangeDataSource.getNumbers().get(position);
             holder.mNumberView.setText(String.valueOf(numberToSet));
 
             if (numberToSet % 2 == 0) {
@@ -130,7 +132,7 @@ public class RecyclerViewFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return mNumbersDataSource.getNumbers().size();
+            return mNumbersRangeDataSource.getNumbers().size();
         }
 
 
