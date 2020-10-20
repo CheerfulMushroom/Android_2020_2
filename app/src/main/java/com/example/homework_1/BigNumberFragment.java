@@ -11,10 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import org.jetbrains.annotations.NotNull;
+
 public class BigNumberFragment extends Fragment {
     private static final String COLOR = "COLOR";
     private static final String NUMBER = "NUMBER";
 
+    @NotNull
     public static BigNumberFragment newInstance(int number, @ColorInt int color) {
         BigNumberFragment fragment = new BigNumberFragment();
 
