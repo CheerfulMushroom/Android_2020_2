@@ -16,12 +16,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class RecyclerViewFragment extends Fragment {
     private static final String FIRST_NUMBER = "FIRST_NUMBER";
     private static final String LAST_NUMBER = "LAST_NUMBER";
 
+    @NotNull
     public static RecyclerViewFragment newInstance(int firstNumber, int lastNumber) {
         RecyclerViewFragment fragment = new RecyclerViewFragment();
 
@@ -64,6 +67,17 @@ public class RecyclerViewFragment extends Fragment {
         return view;
     }
 
+    private void openBigNumberFragment(int number, @ColorInt int color) {
+        Fragment bigNumberFragment = BigNumberFragment.newInstance(number, color);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager != null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.main_fragment, bigNumberFragment);
+            transaction.addToBackStack(null);
+            transaction.commitAllowingStateLoss();
+        }
+    }
 
     public class NumbersAdapter extends RecyclerView.Adapter<NumberViewHolder> {
         private NumbersRangeDataSource mNumbersRangeDataSource;
@@ -116,16 +130,7 @@ public class RecyclerViewFragment extends Fragment {
                     int number = Integer.parseInt(holder.mNumberView.getText().toString());
                     @ColorInt int color = holder.mNumberView.getCurrentTextColor();
 
-                    Fragment bigNumberFragment = BigNumberFragment.newInstance(number, color);
-
-                    FragmentManager fragmentManager = RecyclerViewFragment.this.getFragmentManager();
-                    if (fragmentManager != null) {
-                        FragmentTransaction transaction = fragmentManager.beginTransaction();
-                        transaction.replace(R.id.main_fragment, bigNumberFragment);
-                        transaction.addToBackStack(null);
-                        transaction.commitAllowingStateLoss();
-                    }
-
+                    RecyclerViewFragment.this.openBigNumberFragment(number, color);
                 }
             });
         }
