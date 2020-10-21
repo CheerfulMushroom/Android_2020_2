@@ -1,6 +1,7 @@
 package com.example.homework_1;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ public class BigNumberFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.i("BigNumberFragment", "onCreateView");
+
         return inflater.inflate(R.layout.big_number_layout, container, false);
     }
 
@@ -51,8 +54,21 @@ public class BigNumberFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+        Log.i("BigNumberFragment", "onSaveInstanceState");
 
         outState.putInt(NUMBER, mNumber);
         outState.putInt(COLOR, mColor);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i("BigNumberFragment", "onDestroyView");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i("BigNumberFragment", "onDestroy");
     }
 }

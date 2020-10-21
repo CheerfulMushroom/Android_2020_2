@@ -1,6 +1,7 @@
 package com.example.homework_1;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,6 @@ import java.util.List;
 
 public class RecyclerViewFragment extends Fragment {
     private static final String BIG_NUMBER_FRAGMENT_TAG = "BIG_NUMBER_FRAGMENT_TAG";
-    private static final String BIG_NUMBER_FRAGMENT_KEY = "BIG_NUMBER_FRAGMENT_KEY";
     private static final String FIRST_NUMBER = "FIRST_NUMBER";
     private static final String LAST_NUMBER = "LAST_NUMBER";
 
@@ -40,24 +40,18 @@ public class RecyclerViewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.i("RecyclerViewFragment", "onCreateView");
         View view = inflater.inflate(R.layout.recycler_layout, container, false);
 
         if (savedInstanceState != null) {
             mFirstNumber = savedInstanceState.getInt(FIRST_NUMBER);
             mLastNumber = savedInstanceState.getInt(LAST_NUMBER);
-
-            assert getFragmentManager() != null;
-
-            Fragment bigNumberFragment = getFragmentManager().getFragment(savedInstanceState, BIG_NUMBER_FRAGMENT_KEY);
-            if (bigNumberFragment != null) {
-                assert getFragmentManager() != null;
-
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.main_fragment, bigNumberFragment, BIG_NUMBER_FRAGMENT_TAG)
-                        .addToBackStack(null)
-                        .commitAllowingStateLoss();
-            }
+        } else {
+            Log.w("RecyclerViewFragment", "NO SAVED INSTANCE");
         }
+
+        Log.i("RecyclerViewFragment", "mFirstNumber =  " + String.valueOf(mFirstNumber));
+        Log.i("RecyclerViewFragment", "mLastNumber =  " + String.valueOf(mLastNumber));
 
         NumbersRangeDataSource numbersRangeDataSource = new NumbersRangeDataSource(mFirstNumber, mLastNumber);
 
@@ -83,17 +77,24 @@ public class RecyclerViewFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+        Log.i("RecyclerViewFragment", "onSaveInstanceState");
 
         outState.putInt(FIRST_NUMBER, mFirstNumber);
         outState.putInt(LAST_NUMBER, mLastNumber);
+        Log.i("RecyclerViewFragment", "mFirstNumber =  " + String.valueOf(mFirstNumber));
+        Log.i("RecyclerViewFragment", "mLastNumber =  " + String.valueOf(mLastNumber));
+    }
 
-        FragmentManager fragmentManager = getFragmentManager();
-        assert fragmentManager != null;
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i("RecyclerViewFragment", "onDestroyView");
+    }
 
-        Fragment bigNumberFragment = fragmentManager.findFragmentByTag(BIG_NUMBER_FRAGMENT_TAG);
-        if (bigNumberFragment != null) {
-            getFragmentManager().putFragment(outState, BIG_NUMBER_FRAGMENT_KEY, bigNumberFragment);
-        }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i("RecyclerViewFragment", "onDestroy");
     }
 
     private void openBigNumberFragment(int number, @ColorInt int color) {
