@@ -110,10 +110,7 @@ public class RecyclerViewFragment extends Fragment {
         }
 
         public void addElement() {
-            List<Integer> numbers = mNumbersRangeDataSource.getNumbers();
-            final int lastNumber = numbers.get(numbers.size() - 1);
-
-            mNumbersRangeDataSource.addNumber(lastNumber + 1);
+            mNumbersRangeDataSource.increaseRangeToRight();
 
             notifyItemInserted(mNumbersRangeDataSource.size());
         }

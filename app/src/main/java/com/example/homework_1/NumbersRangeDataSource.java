@@ -18,9 +18,9 @@ public class NumbersRangeDataSource {
         return mNumbers;
     }
 
-    // TODO: change method
-    public void addNumber(int number) {
-        mNumbers.add(number);
+    public void increaseRangeToRight() {
+        final int lastNumber = mNumbers.get(mNumbers.size() - 1);
+        mNumbers.add(lastNumber + 1);
     }
 
     public int size() {
