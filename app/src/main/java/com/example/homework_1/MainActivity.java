@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
 
-        if (savedInstanceState == null) {
+        if (fragmentManager.findFragmentByTag(RECYCLER_FRAGMENT_TAG) == null) {
             fragmentManager.beginTransaction()
                     .replace(R.id.main_fragment, RecyclerViewFragment.newInstance(FIRST_NUMBER, LAST_NUMBER), RECYCLER_FRAGMENT_TAG)
                     .commitAllowingStateLoss();

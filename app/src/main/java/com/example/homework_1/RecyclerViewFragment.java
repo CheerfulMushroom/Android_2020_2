@@ -37,12 +37,9 @@ public class RecyclerViewFragment extends Fragment {
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.i("RecyclerViewFragment", "onCreateView start");
-        View view = inflater.inflate(R.layout.recycler_layout, container, false);
-
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             mFirstNumber = savedInstanceState.getInt(FIRST_NUMBER);
             mLastNumber = savedInstanceState.getInt(LAST_NUMBER);
@@ -52,6 +49,13 @@ public class RecyclerViewFragment extends Fragment {
 
         Log.i("RecyclerViewFragment", "mFirstNumber =  " + String.valueOf(mFirstNumber));
         Log.i("RecyclerViewFragment", "mLastNumber =  " + String.valueOf(mLastNumber));
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.i("RecyclerViewFragment", "onCreateView start");
+        View view = inflater.inflate(R.layout.recycler_layout, container, false);
 
         NumbersRangeDataSource numbersRangeDataSource = new NumbersRangeDataSource(mFirstNumber, mLastNumber);
 

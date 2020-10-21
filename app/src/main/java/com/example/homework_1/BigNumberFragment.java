@@ -29,6 +29,16 @@ public class BigNumberFragment extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            mColor = savedInstanceState.getInt(COLOR);
+            mNumber = savedInstanceState.getInt(NUMBER);
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,10 +52,6 @@ public class BigNumberFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (savedInstanceState != null) {
-            mColor = savedInstanceState.getInt(COLOR);
-            mNumber = savedInstanceState.getInt(NUMBER);
-        }
 
         TextView numberView = view.findViewById(R.id.big_number);
         numberView.setTextColor(mColor);
