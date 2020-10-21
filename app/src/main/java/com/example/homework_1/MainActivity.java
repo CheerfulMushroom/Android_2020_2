@@ -1,6 +1,5 @@
 package com.example.homework_1;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -25,10 +24,5 @@ public class MainActivity extends AppCompatActivity {
                     .commitAllowingStateLoss();
         }
 
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 }
