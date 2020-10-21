@@ -40,7 +40,7 @@ public class RecyclerViewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.i("RecyclerViewFragment", "onCreateView");
+        Log.i("RecyclerViewFragment", "onCreateView start");
         View view = inflater.inflate(R.layout.recycler_layout, container, false);
 
         if (savedInstanceState != null) {
@@ -71,30 +71,35 @@ public class RecyclerViewFragment extends Fragment {
             }
         });
 
+        Log.i("RecyclerViewFragment", "onCreateView end");
         return view;
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
+        Log.i("RecyclerViewFragment", "onSaveInstanceState start");
         super.onSaveInstanceState(outState);
-        Log.i("RecyclerViewFragment", "onSaveInstanceState");
 
         outState.putInt(FIRST_NUMBER, mFirstNumber);
         outState.putInt(LAST_NUMBER, mLastNumber);
         Log.i("RecyclerViewFragment", "mFirstNumber =  " + String.valueOf(mFirstNumber));
         Log.i("RecyclerViewFragment", "mLastNumber =  " + String.valueOf(mLastNumber));
+
+        Log.i("RecyclerViewFragment", "onSaveInstanceState end");
     }
 
     @Override
     public void onDestroyView() {
+        Log.i("RecyclerViewFragment", "onDestroyView start");
         super.onDestroyView();
-        Log.i("RecyclerViewFragment", "onDestroyView");
+        Log.i("RecyclerViewFragment", "onDestroyView end");
     }
 
     @Override
     public void onDestroy() {
+        Log.i("RecyclerViewFragment", "onDestroy start");
         super.onDestroy();
-        Log.i("RecyclerViewFragment", "onDestroy");
+        Log.i("RecyclerViewFragment", "onDestroy end");
     }
 
     private void openBigNumberFragment(int number, @ColorInt int color) {

@@ -32,7 +32,8 @@ public class BigNumberFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.i("BigNumberFragment", "onCreateView");
+        Log.i("BigNumberFragment", "onCreateView start");
+        Log.i("BigNumberFragment", "onCreateView end");
 
         return inflater.inflate(R.layout.big_number_layout, container, false);
     }
@@ -53,22 +54,26 @@ public class BigNumberFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
+        Log.i("BigNumberFragment", "onSaveInstanceState start");
         super.onSaveInstanceState(outState);
-        Log.i("BigNumberFragment", "onSaveInstanceState");
 
         outState.putInt(NUMBER, mNumber);
         outState.putInt(COLOR, mColor);
+        Log.i("BigNumberFragment", "onSaveInstanceState end");
     }
 
     @Override
     public void onDestroyView() {
+        Log.i("BigNumberFragment", "onDestroyView start");
         super.onDestroyView();
-        Log.i("BigNumberFragment", "onDestroyView");
+        Log.i("BigNumberFragment", "onDestroyView end");
+
     }
 
     @Override
     public void onDestroy() {
+        Log.i("BigNumberFragment", "onDestroy start");
         super.onDestroy();
-        Log.i("BigNumberFragment", "onDestroy");
+        Log.i("BigNumberFragment", "onDestroy end");
     }
 }

@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("MainActivity", "onSaveInstanceState start");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -28,12 +30,28 @@ public class MainActivity extends AppCompatActivity {
                     .commitAllowingStateLoss();
         }
 
+        Log.i("MainActivity", "onSaveInstanceState end");
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
+        Log.i("MainActivity", "onSaveInstanceState start");
         super.onSaveInstanceState(outState);
-        Log.i("MainActivity", "onSaveInstanceState");
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentByTag(RECYCLER_FRAGMENT_TAG);
+
+        if (fragment != null) {
+            fragmentManager.putFragment(outState, RECYCLER_FRAGMENT_KEY, fragment);
+        }
+
+        Log.i("MainActivity", "onSaveInstanceState end");
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.i("MainActivity", "onDestroy start");
+        super.onDestroy();
+        Log.i("MainActivity", "onDestroy end");
     }
 }
