@@ -1,7 +1,6 @@
 package com.example.homework_1;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,21 +39,16 @@ public class RecyclerViewFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (savedInstanceState != null) {
             mFirstNumber = savedInstanceState.getInt(FIRST_NUMBER);
             mLastNumber = savedInstanceState.getInt(LAST_NUMBER);
-        } else {
-            Log.w("RecyclerViewFragment", "NO SAVED INSTANCE");
         }
-
-        Log.i("RecyclerViewFragment", "mFirstNumber =  " + String.valueOf(mFirstNumber));
-        Log.i("RecyclerViewFragment", "mLastNumber =  " + String.valueOf(mLastNumber));
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.i("RecyclerViewFragment", "onCreateView start");
         View view = inflater.inflate(R.layout.recycler_layout, container, false);
 
         NumbersRangeDataSource numbersRangeDataSource = new NumbersRangeDataSource(mFirstNumber, mLastNumber);
@@ -75,35 +69,15 @@ public class RecyclerViewFragment extends Fragment {
             }
         });
 
-        Log.i("RecyclerViewFragment", "onCreateView end");
         return view;
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        Log.i("RecyclerViewFragment", "onSaveInstanceState start");
         super.onSaveInstanceState(outState);
 
         outState.putInt(FIRST_NUMBER, mFirstNumber);
         outState.putInt(LAST_NUMBER, mLastNumber);
-        Log.i("RecyclerViewFragment", "mFirstNumber =  " + String.valueOf(mFirstNumber));
-        Log.i("RecyclerViewFragment", "mLastNumber =  " + String.valueOf(mLastNumber));
-
-        Log.i("RecyclerViewFragment", "onSaveInstanceState end");
-    }
-
-    @Override
-    public void onDestroyView() {
-        Log.i("RecyclerViewFragment", "onDestroyView start");
-        super.onDestroyView();
-        Log.i("RecyclerViewFragment", "onDestroyView end");
-    }
-
-    @Override
-    public void onDestroy() {
-        Log.i("RecyclerViewFragment", "onDestroy start");
-        super.onDestroy();
-        Log.i("RecyclerViewFragment", "onDestroy end");
     }
 
     private void openBigNumberFragment(int number, @ColorInt int color) {
@@ -120,10 +94,8 @@ public class RecyclerViewFragment extends Fragment {
 
     public class NumbersAdapter extends RecyclerView.Adapter<NumberViewHolder> {
         private NumbersRangeDataSource mNumbersRangeDataSource;
-        private final @ColorInt
-        int mEvenNumbersColor;
-        private final @ColorInt
-        int mOddNumbersColor;
+        private final @ColorInt int mEvenNumbersColor;
+        private final @ColorInt int mOddNumbersColor;
 
         public NumbersAdapter(NumbersRangeDataSource numbersRangeDataSource,
                               @ColorInt int evenNumbersColor,
