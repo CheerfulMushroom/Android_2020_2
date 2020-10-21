@@ -16,16 +16,15 @@ import org.jetbrains.annotations.NotNull;
 public class BigNumberFragment extends Fragment {
     private static final String COLOR = "COLOR";
     private static final String NUMBER = "NUMBER";
+    public int mNumber;
+    public @ColorInt int mColor;
 
     @NotNull
     public static BigNumberFragment newInstance(int number, @ColorInt int color) {
         BigNumberFragment fragment = new BigNumberFragment();
+        fragment.mNumber = number;
+        fragment.mColor = color;
 
-        Bundle bundle = new Bundle();
-        bundle.putInt(COLOR, color);
-        bundle.putInt(NUMBER, number);
-
-        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -39,13 +38,21 @@ public class BigNumberFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        assert getArguments() != null;
-
-        int color = getArguments().getInt(COLOR);
-        int number = getArguments().getInt(NUMBER);
+        if (savedInstanceState != null) {
+            mColor = savedInstanceState.getInt(COLOR);
+            mNumber = savedInstanceState.getInt(NUMBER);
+        }
 
         TextView numberView = view.findViewById(R.id.big_number);
-        numberView.setTextColor(color);
-        numberView.setText(String.valueOf(number));
+        numberView.setTextColor(mColor);
+        numberView.setText(String.valueOf(mNumber));
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt(NUMBER, mNumber);
+        outState.putInt(COLOR, mColor);
     }
 }
