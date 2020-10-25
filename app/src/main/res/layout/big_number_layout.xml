@@ -9,7 +9,7 @@
         android:id="@+id/big_number"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="60sp"
+        android:textSize="@dimen/big_number_size"
         android:gravity="center"
 
         tools:text="@string/longString"

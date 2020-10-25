@@ -15,7 +15,7 @@
         android:layout_height="0dp"
         android:layout_width="match_parent"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="3"
+        app:spanCount="@integer/recycler_fragment_columns"
         />
 
     <Button
